@@ -1,0 +1,53 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 50px;
+  background-color: white;
+  border-bottom: 1px solid black;
+}
+
+.headerlogo img {
+  height: 50px;
+  margin: 5px 0 0 30px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  align-items: center; 
+  
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+.nav-links a:hover {
+  color: #007bff;
+}
+.signupbtn{
+   border-radius: 25px;
+   border: 0;
+   background-color: #aea2a2;
+   height: 40px;
+   width: 90px;
+   color: white;
+}
+.signupbtn:hover{
+    background-color: #007bff;
+    
+}
+.loginbtn{
+   border-radius: 25px;
+   border: 0;
+   background-color: #007bff;
+   height: 40px;
+   width: 90px;
+   color: white;
+}
+.loginbtn:hover{
+    background-color: #aea2a2;
+}
