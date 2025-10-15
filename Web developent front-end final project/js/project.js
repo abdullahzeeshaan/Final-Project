@@ -1,114 +1,56 @@
-import { db, collection, getDocs, doc, updateDoc, deleteDoc } from "../js/firebase.js";
+import { db, collection, getDocs } from "./firebase.js";
 
+// DOM se container lo
 const projectContainer = document.getElementById("projectContainer");
-const searchInput = document.getElementById("searchInput");
-const editModal = new bootstrap.Modal(document.getElementById("editModal"));
-const editTitle = document.getElementById("editTitle");
-const editDesc = document.getElementById("editDesc");
-const updateBtn = document.getElementById("updateProjectBtn");
 
-let projects = [];
-let currentEditId = null;
-
+// Firebase se data lena
 async function loadProjects() {
-  const querySnapshot = await getDocs(collection(db, "projects"));
-  projects = [];
-  querySnapshot.forEach(docSnap => {
-    projects.push({ id: docSnap.id, ...docSnap.data() });
-  });
-  displayProjects(projects);
-}
-
-function displayProjects(list) {
-  projectContainer.innerHTML = "";
-  if (list.length === 0) {
-    projectContainer.innerHTML = `<p class="text-center text-muted">No projects found.</p>`;
-    return;
-  }
-
-  list.forEach(p => {
-    const col = document.createElement("div");
-    col.className = "col-12 col-md-6 col-lg-4 d-flex justify-content-center";
-    col.innerHTML = `
-      <div class="project-card w-100">
-        <h5>${p.title}</h5>
-        <p>${p.description}</p>
-        <div class="card-buttons">
-          <button class="btn btn-sm btn-outline-primary editBtn">Edit</button>
-          <button class="btn btn-sm btn-outline-danger deleteBtn">Delete</button>
-        </div>
-      </div>
-    `;
-
-    const card = col.querySelector(".project-card");
-
-    // Enlarge on click
-    card.addEventListener("click", (e) => {
-    
-      if (e.target.tagName === "BUTTON") return;
-      document.querySelectorAll(".project-card.expanded").forEach(c => c.classList.remove("expanded"));
-      card.classList.toggle("expanded");
-    });
-
-    // Edit button
-    col.querySelector(".editBtn").addEventListener("click", (e) => {
-      e.stopPropagation();
-      currentEditId = p.id;
-      editTitle.value = p.title;
-      editDesc.value = p.description;
-      editModal.show();
-    });
-
-    // Delete button
-    col.querySelector(".deleteBtn").addEventListener("click", async (e) => {
-      e.stopPropagation();
-      if (confirm("Are you sure you want to delete this project?")) {
-        await deleteDoc(doc(db, "projects", p.id));
-        alert("Project deleted!");
-        loadProjects();
-      }
-    });
-
-    projectContainer.appendChild(col);
-  });
-}
-
-// Update project
-updateBtn.addEventListener("click", async () => {
-  const newTitle = editTitle.value.trim();
-  const newDesc = editDesc.value.trim();
-
-  if (!newTitle || !newDesc) {
-    alert("Both fields are required!");
-    return;
-  }
-
   try {
-    await updateDoc(doc(db, "projects", currentEditId), {
-      title: newTitle,
-      description: newDesc
+    const querySnapshot = await getDocs(collection(db, "projects"));
+    
+    if (querySnapshot.empty) {
+      projectContainer.innerHTML = `<p class="text-center text-muted mt-4">No projects found.</p>`;
+      return;
+    }
+
+    // har document se data nikalna
+    let html = "";
+    querySnapshot.forEach((doc) => {
+      const project = doc.data();
+      html += `
+        <div class="card mb-3 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">${project.title || "Untitled Project"}</h5>
+            <p class="card-text text-muted">${project.description || "No description available."}</p>
+            <p class="small text-secondary mb-0"><strong>Created by:</strong> ${project.owner || "Unknown"}</p>
+          </div>
+        </div>
+      `;
     });
-    editModal.hide();
-    alert(" Project updated!");
-    loadProjects();
+
+    // container me add karna
+    projectContainer.innerHTML = html;
+
   } catch (error) {
-    console.error("Error updating project:", error);
+    console.error("Error loading projects:", error);
+    projectContainer.innerHTML = `<p class="text-danger">Error loading projects.</p>`;
   }
-});
-
-// Search
-searchInput.addEventListener("input", () => {
-  const text = searchInput.value.toLowerCase();
-  const filtered = projects.filter(p => p.title.toLowerCase().includes(text));
-  displayProjects(filtered);
-});
-
-loadProjects();
-// hamburger Section
-function toggleMenu() {
-  const nav = document.getElementById("navLinks");
-  nav.classList.toggle("active");
 }
 
-// Make it globally accessible
-window.toggleMenu = toggleMenu;
+// Page load hote hi data fetch kar lo
+window.addEventListener("DOMContentLoaded", loadProjects);
+
+
+
+// 🔹 BONUS STEP — Search filter ka code ↓ (isse file ke end me add karo)
+const searchInput = document.querySelector("input[type='text']");
+
+searchInput.addEventListener("input", () => {
+  const term = searchInput.value.toLowerCase();
+  const cards = document.querySelectorAll("#projectContainer .card");
+
+  cards.forEach((card) => {
+    const title = card.querySelector(".card-title").textContent.toLowerCase();
+    card.style.display = title.includes(term) ? "block" : "none";
+  });
+});

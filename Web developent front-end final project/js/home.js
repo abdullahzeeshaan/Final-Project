@@ -64,5 +64,4 @@ faqItems.forEach(item => {
       answer.style.maxHeight = 0;
     }
   });
-
 });
