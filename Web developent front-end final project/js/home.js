@@ -1,4 +1,4 @@
-import { db, collection, addDoc, serverTimestamp } from "./firebase.js";
+import { db, collection, addDoc, serverTimestamp } from "./firebase2.js";
 
 const projectCollection = collection(db, "projects");
 
@@ -64,4 +64,5 @@ faqItems.forEach(item => {
       answer.style.maxHeight = 0;
     }
   });
+
 });
