@@ -1,17 +1,9 @@
 // js/firebaseConfig.js
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
-import {
-  getFirestore
-} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
-import {
-  getStorage,
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  deleteObject
-} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-storage.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, query, orderBy, serverTimestamp, getDocs } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
-// <-- YOUR firebase config (you already had this) -->
+
+
 const firebaseConfig = {
   apiKey: "AIzaSyBQvk0-W185bBV8t-R9-DisyUE6OZS9SnQ",
   authDomain: "my-project-eb1f6.firebaseapp.com",
@@ -23,6 +15,5 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const storage = getStorage(app);
 
-export { app, db, storage, ref, uploadBytes, getDownloadURL, deleteObject };
+export { db, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, query, orderBy, serverTimestamp, getDocs };

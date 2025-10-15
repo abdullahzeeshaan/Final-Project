@@ -1,63 +1,277 @@
-/* css/style.css */
-/* Basic reset */
-* { box-sizing: border-box; }
-
 /* Navbar */
 .navbar {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 10px 20px;
+  align-items: center;
+  padding: 10px 50px;
   background-color: #023e8A;
-  color: #fff;
+  border-bottom: 1px solid black;
+  position: relative;
 }
-.headerlogo img { height: 46px; margin-left: 6px; }
-.nav-links { display: flex; gap: 12px; align-items: center; }
-.nav-links a { color: #fff; text-decoration: none; font-weight:600; }
-.menu-icon { display: none; color: #fff; font-size: 26px; cursor: pointer; }
-.search-input { width: 320px; padding: 6px 10px; border-radius: 20px; border: none; }
 
-/* Buttons in navbar */
+.headerlogo img {
+  height: 50px;
+  margin: 5px 0 0 30px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #fbfcfc;
+  font-weight: bold;
+}
+
+.nav-links a:hover {
+  color: #ADE8F4;
+}
+
 .signupbtn, .loginbtn {
-  border-radius: 22px;
+  border-radius: 25px;
   border: 0;
-  height: 36px;
-  width: 86px;
+  height: 40px;
+  width: 90px;
+  color: rgb(18, 17, 17);
   cursor: pointer;
-  font-weight:600;
 }
-.signupbtn { background: #fff; color: #000; }
-.loginbtn { background: #90e0ef; color:#fff; }
 
-/* Hero */
-.hero { background: #fff; }
-
-/* Projects grid / cards */
-.project-card {
-  border-radius: 10px;
-  padding: 12px;
-  text-align: left;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-  transition: transform .25s ease, box-shadow .25s ease;
-  background: #fff;
+.signupbtn {
+  background-color: white;
 }
-.project-card img { width:100%; height:200px; object-fit:cover; border-radius:8px; }
-.project-card h3 { margin-top:10px; font-size:1.05rem; color:#023e8A; }
-.project-card p { color:#444; font-size:0.95rem; }
 
-/* Hover */
-.project-card:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(0,0,0,0.12); }
-
-/* Modal image */
-#modalProjectImage { border-radius:8px; }
-
-/* Responsive */
-@media (max-width: 992px) {
-  .search-input { width: 200px; }
+.signupbtn:hover {
+  background-color: #90e0ef;
+  color: white;
 }
+
+.loginbtn {
+  background-color: #90e0ef;
+  color: white;
+}
+
+.loginbtn:hover {
+  background-color: white;
+  color: black;
+}
+
+/* Hamburger Icon */
+.menu-icon {
+  display: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: white;
+}
+
+/* --- Responsive --- */
 @media (max-width: 768px) {
-  .menu-icon { display: block; }
-  .nav-links { display: none; flex-direction: column; position: absolute; top:64px; right:12px; background:#023e8A; padding:12px; border-radius:10px; z-index:999; width:200px; }
-  .nav-links.active { display:flex; }
-  .search-input { width: 100%; margin:10px 0; }
+  .menu-icon {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background-color: #023e8A;
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    width: 220px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    z-index: 999;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .nav-links a, 
+  .signupbtn, 
+  .loginbtn {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+}
+
+/* Body & Buttons */
+body {
+  background-color: #f8f9fa;
+}
+
+button {
+  font-weight: 500;
+}
+
+.modal-content {
+  border-radius: 12px;
+}
+
+/* project section */
+body {
+  background-color: #f8f9fa;
+  padding-bottom: 50px;
+}
+
+#searchInput {
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 20px;
+}
+
+.project-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  width: 100%; 
+}
+
+.project-card.expanded {
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  z-index: 10;
+}
+
+.project-card .card-buttons {
+  display: none;
+  margin-top: 10px;
+}
+
+.project-card.expanded .card-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.project-card h5 {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.project-card p {
+  color: #555;
+  font-size: 0.95rem;
+}
+.project-card {
+  margin-bottom: 15px; 
+}
+
+/* Responsive Columns */
+@media (min-width: 1200px) { 
+  .col-lg-4 { flex: 0 0 31%; max-width: 31%; }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .col-lg-4 { flex: 0 0 32%; max-width: 32%; }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .col-md-6 { flex: 0 0 48%; max-width: 48%; }
+}
+
+@media (max-width: 767px) { /* sm */
+  .col-12 { flex: 0 0 95%; max-width: 95%; margin: 0 auto; }
+}
+
+/* Footer */
+.footerdiv {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    padding: 40px 20px; 
+    border-top: 2px solid #ccc;
+    flex-wrap: wrap; 
+    gap: 30px;
+}
+
+.listfoot {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    line-height: 1.8;
+}
+
+.listfoot li:first-child {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.social-section {
+    text-align: center;
+}
+
+.social-section h5 {
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.social-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.social-list li {
+    margin: 5px 0;
+}
+
+.icons {
+    height: 30px;
+    width: 30px;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.icons:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* --- Responsive Breakpoints --- */
+@media (max-width: 992px) {
+    .footerdiv {
+        justify-content: space-around;
+    }
+    .listfoot {
+        text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .footerdiv {
+        flex-direction: column;
+        align-items: center;
+        gap: 25px;
+        padding: 30px 10px;
+    }
+    .listfoot {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .listfoot li:first-child {
+        font-size: 16px;
+    }
+    .listfoot li {
+        font-size: 14px;
+    }
+    .icons {
+        height: 28px;
+        width: 28px;
+    }
 }

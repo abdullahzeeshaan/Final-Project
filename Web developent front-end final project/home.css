@@ -1,5 +1,5 @@
 /* Navbar */
- .navbar {
+.navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -58,7 +58,7 @@
   color: black;
 }
 
-/* --- Responsive --- */
+/* Hamburger Icon */
 .menu-icon {
   display: none;
   font-size: 28px;
@@ -66,6 +66,7 @@
   color: white;
 }
 
+/* --- Responsive --- */
 @media (max-width: 768px) {
   .menu-icon {
     display: block;
@@ -92,12 +93,26 @@
 
   .nav-links a, 
   .signupbtn, 
-  .loginbtn, 
-  .btn {
+  .loginbtn {
     width: 100%;
     text-align: center;
+    margin-bottom: 10px;
   }
 }
+
+/* Body & Buttons */
+body {
+  background-color: #f8f9fa;
+}
+
+button {
+  font-weight: 500;
+}
+
+.modal-content {
+  border-radius: 12px;
+}
+
 
 /* About Section */
 .about-section {

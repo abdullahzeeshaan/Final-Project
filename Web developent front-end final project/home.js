@@ -1,54 +1,67 @@
-// js/home.js
-import { db, storage, ref, uploadBytes, getDownloadURL } from "./firebaseConfig.js";
-import { collection, addDoc } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+import { db, collection, addDoc, serverTimestamp } from "./firebase.js";
 
-// small helpers for navbar toggle & faq (if you have faq code, keep it)
-function toggleMenu() { document.getElementById("navLinks").classList.toggle("active"); }
+const projectCollection = collection(db, "projects");
+
+// Save Project Button Click
+document.getElementById("saveProjectBtn").addEventListener("click", async () => {
+  const title = document.getElementById("projectTitle").value.trim();
+  const desc = document.getElementById("projectDesc").value.trim();
+
+  if (title && desc) {
+    try {
+      await addDoc(projectCollection, {
+        title,
+        description: desc,
+        createdAt: serverTimestamp()
+      });
+
+      // Clear input fields
+      document.getElementById("projectTitle").value = "";
+      document.getElementById("projectDesc").value = "";
+
+      // Hide Bootstrap modal after saving
+      const modalElement = document.getElementById('addProjectModal');
+      const modalInstance = bootstrap.Modal.getInstance(modalElement);
+      modalInstance.hide();
+
+      alert("Project added successfully!");
+    } catch (error) {
+      console.error("Error adding project:", error);
+      alert(" Failed to add project. Please try again.");
+    }
+  } else {
+    alert(" Please fill out both fields!");
+  }
+});
+function toggleMenu() {
+  const nav = document.getElementById("navLinks");
+  nav.classList.toggle("active");
+}
+
+// Make it globally accessible
 window.toggleMenu = toggleMenu;
 
-// Form handling
-const addProjectForm = document.getElementById("addProjectForm");
 
-addProjectForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
 
-  const fileInput = document.getElementById("projectImage");
-  const title = document.getElementById("projectTitle").value.trim();
-  const description = document.getElementById("projectDescription").value.trim();
-  const file = fileInput.files[0];
+// Select all FAQ items
+const faqItems = document.querySelectorAll(".faq-item");
 
-  if (!file || !title || !description) {
-    alert("Please provide image, title and description.");
-    return;
-  }
+// Loop through each item
+faqItems.forEach(item => {
+  const question = item.querySelector(".faq-question");
 
-  try {
-    // upload image
-    const storageRef = ref(storage, `projects/${Date.now()}_${file.name}`);
-    await uploadBytes(storageRef, file);
-    const imageUrl = await getDownloadURL(storageRef);
+  question.addEventListener("click", () => {
+    // Toggle active class
+    item.classList.toggle("active");
 
-    // save to Firestore
-    await addDoc(collection(db, "projects"), {
-      title,
-      description,
-      image: imageUrl,
-      createdAt: Date.now()
-    });
+    // Get the answer element
+    const answer = item.querySelector(".faq-answer");
 
-    // success
-    alert("Project saved!");
-    addProjectForm.reset();
-    // close bootstrap modal safely
-    const modalEl = document.getElementById("addProjectForm");
-    const bsModal = bootstrap.Modal.getOrCreateInstance(modalEl);
-    bsModal.hide();
-
-    // optional: redirect to project page so user sees it immediately
-    window.location.href = "project.html";
-
-  } catch (err) {
-    console.error(err);
-    alert("Error saving project. Check console.");
-  }
+    // Toggle display
+    if(item.classList.contains("active")){
+      answer.style.maxHeight = answer.scrollHeight + "px";
+    } else {
+      answer.style.maxHeight = 0;
+    }
+  });
 });

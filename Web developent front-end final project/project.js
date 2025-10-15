@@ -1,87 +1,114 @@
-// js/project.js
-import { db } from "./firebaseConfig.js";
-import { collection, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+import { db, collection, getDocs, doc, updateDoc, deleteDoc } from "./firebase.js";
 
 const projectContainer = document.getElementById("projectContainer");
-const searchInput = document.getElementById("projectSearch");
-const modalLabel = document.getElementById("projectDetailModalLabel");
-const modalImage = document.getElementById("modalProjectImage");
-const modalDesc = document.getElementById("modalProjectDescription");
-const editBtn = document.getElementById("editProjectBtn");
-const deleteBtn = document.getElementById("deleteProjectBtn");
+const searchInput = document.getElementById("searchInput");
+const editModal = new bootstrap.Modal(document.getElementById("editModal"));
+const editTitle = document.getElementById("editTitle");
+const editDesc = document.getElementById("editDesc");
+const updateBtn = document.getElementById("updateProjectBtn");
 
-function toggleMenu() { document.getElementById("navLinks").classList.toggle("active"); }
-window.toggleMenu = toggleMenu;
-
-let allProjects = []; // local cache
+let projects = [];
+let currentEditId = null;
 
 async function loadProjects() {
-  const colRef = collection(db, "projects");
-  const snap = await getDocs(colRef);
-  allProjects = [];
-  snap.forEach(d => allProjects.push({ id: d.id, ...d.data() }));
-  renderProjects(allProjects);
+  const querySnapshot = await getDocs(collection(db, "projects"));
+  projects = [];
+  querySnapshot.forEach(docSnap => {
+    projects.push({ id: docSnap.id, ...docSnap.data() });
+  });
+  displayProjects(projects);
 }
 
-function renderProjects(list) {
+function displayProjects(list) {
   projectContainer.innerHTML = "";
-  if (!list.length) {
-    projectContainer.innerHTML = `<div class="col-12 text-center text-muted">No projects found.</div>`;
+  if (list.length === 0) {
+    projectContainer.innerHTML = `<p class="text-center text-muted">No projects found.</p>`;
     return;
   }
+
   list.forEach(p => {
     const col = document.createElement("div");
-    col.className = "col-md-4 col-sm-6 mb-4";
+    col.className = "col-12 col-md-6 col-lg-4 d-flex justify-content-center";
     col.innerHTML = `
-      <div class="project-card p-3" data-id="${p.id}">
-        <img src="${p.image}" alt="${p.title}">
-        <h3>${escapeHtml(p.title)}</h3>
-        <p>${escapeHtml(p.description).substring(0, 120)}...</p>
+      <div class="project-card w-100">
+        <h5>${p.title}</h5>
+        <p>${p.description}</p>
+        <div class="card-buttons">
+          <button class="btn btn-sm btn-outline-primary editBtn">Edit</button>
+          <button class="btn btn-sm btn-outline-danger deleteBtn">Delete</button>
+        </div>
       </div>
     `;
-    col.querySelector(".project-card").addEventListener("click", () => openDetail(p));
+
+    const card = col.querySelector(".project-card");
+
+    // Enlarge on click
+    card.addEventListener("click", (e) => {
+    
+      if (e.target.tagName === "BUTTON") return;
+      document.querySelectorAll(".project-card.expanded").forEach(c => c.classList.remove("expanded"));
+      card.classList.toggle("expanded");
+    });
+
+    // Edit button
+    col.querySelector(".editBtn").addEventListener("click", (e) => {
+      e.stopPropagation();
+      currentEditId = p.id;
+      editTitle.value = p.title;
+      editDesc.value = p.description;
+      editModal.show();
+    });
+
+    // Delete button
+    col.querySelector(".deleteBtn").addEventListener("click", async (e) => {
+      e.stopPropagation();
+      if (confirm("Are you sure you want to delete this project?")) {
+        await deleteDoc(doc(db, "projects", p.id));
+        alert("Project deleted!");
+        loadProjects();
+      }
+    });
+
     projectContainer.appendChild(col);
   });
 }
 
-function openDetail(project) {
-  modalLabel.innerText = project.title;
-  modalImage.src = project.image;
-  modalDesc.innerText = project.description;
+// Update project
+updateBtn.addEventListener("click", async () => {
+  const newTitle = editTitle.value.trim();
+  const newDesc = editDesc.value.trim();
 
-  // delete handler
-  deleteBtn.onclick = async () => {
-    if (!confirm("Delete this project?")) return;
-    await deleteDoc(doc(db, "projects", project.id));
-    // refresh list
-    await loadProjects();
-    // hide modal
-    const m = bootstrap.Modal.getOrCreateInstance(document.getElementById("projectDetailModal"));
-    m.hide();
-  };
+  if (!newTitle || !newDesc) {
+    alert("Both fields are required!");
+    return;
+  }
 
-  // edit placeholder
-  editBtn.onclick = () => {
-    alert("Edit feature coming soon.");
-  };
-
-  const modal = new bootstrap.Modal(document.getElementById("projectDetailModal"));
-  modal.show();
-}
-
-// Search
-searchInput.addEventListener("input", (e) => {
-  const q = e.target.value.toLowerCase().trim();
-  if (!q) return renderProjects(allProjects);
-  const filtered = allProjects.filter(p => p.title.toLowerCase().includes(q));
-  renderProjects(filtered);
+  try {
+    await updateDoc(doc(db, "projects", currentEditId), {
+      title: newTitle,
+      description: newDesc
+    });
+    editModal.hide();
+    alert(" Project updated!");
+    loadProjects();
+  } catch (error) {
+    console.error("Error updating project:", error);
+  }
 });
 
-// small helper to avoid XSS when injecting text
-function escapeHtml(str) {
-  if (!str) return "";
-  return str.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+// Search
+searchInput.addEventListener("input", () => {
+  const text = searchInput.value.toLowerCase();
+  const filtered = projects.filter(p => p.title.toLowerCase().includes(text));
+  displayProjects(filtered);
+});
+
+loadProjects();
+// hamburger Section
+function toggleMenu() {
+  const nav = document.getElementById("navLinks");
+  nav.classList.toggle("active");
 }
 
-// initial load
-loadProjects();
+// Make it globally accessible
+window.toggleMenu = toggleMenu;
