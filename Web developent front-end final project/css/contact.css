@@ -1,10 +1,10 @@
 /* Navbar */
- .navbar {
+.navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 50px;
-  background-color: #023e8A;
+  background-color: #023e8a;
   border-bottom: 1px solid black;
   position: relative;
 }
@@ -27,15 +27,16 @@
 }
 
 .nav-links a:hover {
-  color: #ADE8F4;
+  color: #ade8f4;
 }
 
-.signupbtn, .loginbtn {
+.signupbtn,
+.loginbtn {
   border-radius: 25px;
   border: 0;
   height: 40px;
   width: 90px;
-  color: rgb(18, 17, 17);
+  color: black;
   cursor: pointer;
 }
 
@@ -74,7 +75,7 @@
   .nav-links {
     display: none;
     flex-direction: column;
-    background-color: #023e8A;
+    background-color: #023e8a;
     position: absolute;
     top: 70px;
     right: 20px;
@@ -82,7 +83,7 @@
     padding: 15px;
     border: 1px solid #ddd;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 999;
   }
 
@@ -90,9 +91,9 @@
     display: flex;
   }
 
-  .nav-links a, 
-  .signupbtn, 
-  .loginbtn, 
+  .nav-links a,
+  .signupbtn,
+  .loginbtn,
   .btn {
     width: 100%;
     text-align: center;
@@ -101,94 +102,95 @@
 
 /* Footer */
 .footerdiv {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: flex-start;
-    padding: 40px 20px; 
-    border-top: 2px solid #ccc;
-    flex-wrap: wrap; 
-    gap: 30px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  padding: 40px 20px;
+  border-top: 2px solid #ccc;
+  flex-wrap: wrap;
+  gap: 30px;
 }
 
 .listfoot {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    line-height: 1.8;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  line-height: 1.8;
 }
 
 .listfoot li:first-child {
-    font-weight: bold;
-    margin-bottom: 10px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .social-section {
-    text-align: center;
+  text-align: center;
 }
 
 .social-section h5 {
-    font-weight: bold;
-    margin-bottom: 15px;
+  font-weight: bold;
+  margin-bottom: 15px;
 }
 
 .social-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-    justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .social-list li {
-    margin: 5px 0;
+  margin: 5px 0;
 }
 
 .icons {
-    height: 30px;
-    width: 30px;
-    opacity: 0.7;
-    transition: all 0.3s ease;
+  height: 30px;
+  width: 30px;
+  opacity: 0.7;
+  transition: all 0.3s ease;
 }
 
 .icons:hover {
-    opacity: 1;
-    transform: scale(1.1);
+  opacity: 1;
+  transform: scale(1.1);
 }
 
 /* --- Responsive Breakpoints --- */
 @media (max-width: 992px) {
-    .footerdiv {
-        justify-content: space-around;
-    }
-    .listfoot {
-        text-align: center;
-    }
+  .footerdiv {
+    justify-content: space-around;
+  }
+  .listfoot {
+    text-align: center;
+  }
 }
 
 @media (max-width: 768px) {
-    .footerdiv {
-        flex-direction: column;
-        align-items: center;
-        gap: 25px;
-        padding: 30px 10px;
-    }
-    .listfoot {
-        text-align: center;
-        margin-bottom: 20px;
-    }
+  .footerdiv {
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    padding: 30px 10px;
+  }
+  .listfoot {
+    text-align: center;
+    margin-bottom: 20px;
+  }
 }
 
 @media (max-width: 480px) {
-    .listfoot li:first-child {
-        font-size: 16px;
-    }
-    .listfoot li {
-        font-size: 14px;
-    }
-    .icons {
-        height: 28px;
-        width: 28px;
-    }
+  .listfoot li:first-child {
+    font-size: 16px;
+  }
+  .listfoot li {
+    font-size: 14px;
+  }
+  .icons {
+    height: 28px;
+    width: 28px;
+  }
 }
+

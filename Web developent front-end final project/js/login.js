@@ -1,5 +1,4 @@
 import { auth, signInWithEmailAndPassword } from "./firebase.js";
-
 async function loginUser(event) {
   event.preventDefault();
 

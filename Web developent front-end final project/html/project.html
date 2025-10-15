@@ -1,42 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webflow</title>
-    <link rel="stylesheet" href="./css/style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Projects - Task Manager</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/project.css">
 </head>
-<body class="bg-light">
-    <!-- header -->
-    <div class="navbar">
-    <div class="headerlogo">
-      <a href="./html/home.html">
-        <img src="./assets/ChatGPT Image Oct 9, 2025, 10_43_16 PM.png" alt="Logo" />
-      </a>
-        
+<body>
+  <!-- Header / Navbar -->
+<div class="navbar">
+  <div class="headerlogo">
+    <a href="./home.html">
+      <img src="../assets/ChatGPT Image Oct 9, 2025, 10_43_16 PM.png" alt="Logo" />
+    </a>
+  </div>
+
+  <!-- Hamburger Icon -->
+  <div class="menu-icon" onclick="toggleMenu()">☰</div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="./home.html">Home</a>
+    <a href="./project.html">Project</a>
+    <a href="./contact.html">Contact</a>
+    <button class="signupbtn"><a href="./signup.html">Sign Up</a></button>
+    <button class="loginbtn"><a href="./login.html">Log In</a></button>
+  </div>
+</div>
+
+
+<!-- hero sectioon -->
+
+<div class="container text-center mb-4">
+    <h2 class="fw-bold mb-3 pt-5 " style="color:#023e8A;">Your Projects</h2>
+    <input type="text" id="searchInput" class="form-control w-50 mx-auto" placeholder="Search project...">
+  </div>
+
+  <div id="projectContainer" class="container mt-4"></div>
+
+  <div class="container">
+    <div id="projectContainer" class="row justify-content-center g-4 ">
+      <!-- Cards inserted here -->
     </div>
+  </div>
 
-    <!-- Hamburger Icon -->
-    <div class="menu-icon" onclick="toggleMenu()">☰</div>
-
-        <div class="nav-links" id="navLinks">
-            <a href="./html/home.html">Home</a>
-            <a href="./html/project.html">Project</a>
-            <a href="./html/contact.html">Contact</a>
-            <button class="signupbtn"><a href="./html/signup.html">Sign Up</a></button>
-            <button class="loginbtn"><a href="./html/login.html">Log In</a></button>
+  <!-- Edit Modal -->
+  <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Project</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-    </div>
-
-    <div class="d-flex justify-content-center align-items-center vh-100">
-        <div class="text-center">
-            <img src="./assets/logo.png" alt="Logo" class="mx-auto d-block mb-4" style="max-width: 200px;">
-            <h1 class="mt-3" style="font-size: 200px; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Welcome</h1>
+        <div class="modal-body">
+          <input type="text" id="editTitle" class="form-control mb-3" placeholder="Project Title">
+          <textarea id="editDesc" class="form-control" placeholder="Project Description"></textarea>
         </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" id="updateProjectBtn" class="btn btn-success">Update</button>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <!-- footer -->
+
+
+
+<!-- footer -->
  <div class="footerdiv">
     <div>
     <ul class="listfoot">
@@ -99,5 +130,11 @@
 
 
  </div>
+
+ 
+ <script type="module" src="../js/firebase.js"></script>
+ <script type="module" src="../js/project.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+ 
 </body>
 </html>

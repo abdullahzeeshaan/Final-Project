@@ -1,5 +1,5 @@
 /* Navbar */
- .navbar {
+.navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -58,7 +58,7 @@
   color: black;
 }
 
-/* --- Responsive --- */
+/* Hamburger Icon */
 .menu-icon {
   display: none;
   font-size: 28px;
@@ -66,6 +66,7 @@
   color: white;
 }
 
+/* --- Responsive --- */
 @media (max-width: 768px) {
   .menu-icon {
     display: block;
@@ -92,11 +93,93 @@
 
   .nav-links a, 
   .signupbtn, 
-  .loginbtn, 
-  .btn {
+  .loginbtn {
     width: 100%;
     text-align: center;
+    margin-bottom: 10px;
   }
+}
+
+/* Body & Buttons */
+body {
+  background-color: #f8f9fa;
+}
+
+button {
+  font-weight: 500;
+}
+
+.modal-content {
+  border-radius: 12px;
+}
+
+/* project section */
+body {
+  background-color: #f8f9fa;
+  padding-bottom: 50px;
+}
+
+#searchInput {
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 20px;
+}
+
+.project-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  width: 100%; 
+}
+
+.project-card.expanded {
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  z-index: 10;
+}
+
+.project-card .card-buttons {
+  display: none;
+  margin-top: 10px;
+}
+
+.project-card.expanded .card-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.project-card h5 {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.project-card p {
+  color: #555;
+  font-size: 0.95rem;
+}
+.project-card {
+  margin-bottom: 15px; 
+}
+
+/* Responsive Columns */
+@media (min-width: 1200px) { 
+  .col-lg-4 { flex: 0 0 31%; max-width: 31%; }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .col-lg-4 { flex: 0 0 32%; max-width: 32%; }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .col-md-6 { flex: 0 0 48%; max-width: 48%; }
+}
+
+@media (max-width: 767px) { /* sm */
+  .col-12 { flex: 0 0 95%; max-width: 95%; margin: 0 auto; }
 }
 
 /* Footer */
